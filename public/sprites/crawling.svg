@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Shadow -->
+  <ellipse cx="32" cy="58" rx="16" ry="4" fill="#000" opacity="0.3"/>
+
+  <!-- Tail segments -->
+  <ellipse cx="32" cy="52" rx="8" ry="5" fill="#8B1E1E"/>
+  <ellipse cx="32" cy="48" rx="9" ry="5" fill="#A52A2A"/>
+
+  <!-- Body (main shell) -->
+  <ellipse cx="32" cy="36" rx="14" ry="18" fill="#CD4444"/>
+
+  <!-- Shell segments/texture -->
+  <ellipse cx="32" cy="32" rx="11" ry="14" fill="#D45555" opacity="0.7"/>
+  <ellipse cx="32" cy="28" rx="8" ry="10" fill="#E06666" opacity="0.5"/>
+
+  <!-- Left arm -->
+  <ellipse cx="14" cy="38" rx="6" ry="4" fill="#A52A2A" transform="rotate(-20 14 38)"/>
+  <!-- Left claw -->
+  <ellipse cx="6" cy="36" rx="7" ry="5" fill="#CD4444"/>
+  <ellipse cx="4" cy="34" rx="4" ry="3" fill="#E06666" opacity="0.6"/>
+
+  <!-- Right arm -->
+  <ellipse cx="50" cy="38" rx="6" ry="4" fill="#A52A2A" transform="rotate(20 50 38)"/>
+  <!-- Right claw -->
+  <ellipse cx="58" cy="36" rx="7" ry="5" fill="#CD4444"/>
+  <ellipse cx="60" cy="34" rx="4" ry="3" fill="#E06666" opacity="0.6"/>
+
+  <!-- Legs (left side) -->
+  <ellipse cx="20" cy="46" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-30 20 46)"/>
+  <ellipse cx="18" cy="50" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-20 18 50)"/>
+
+  <!-- Legs (right side) -->
+  <ellipse cx="44" cy="46" rx="5" ry="2" fill="#8B1E1E" transform="rotate(30 44 46)"/>
+  <ellipse cx="46" cy="50" rx="5" ry="2" fill="#8B1E1E" transform="rotate(20 46 50)"/>
+
+  <!-- Head -->
+  <ellipse cx="32" cy="18" rx="10" ry="8" fill="#CD4444"/>
+  <ellipse cx="32" cy="16" rx="7" ry="5" fill="#E06666" opacity="0.5"/>
+
+  <!-- Eye stalks -->
+  <rect x="24" y="8" width="3" height="8" rx="1.5" fill="#A52A2A"/>
+  <rect x="37" y="8" width="3" height="8" rx="1.5" fill="#A52A2A"/>
+
+  <!-- Eyes -->
+  <circle cx="25.5" cy="6" r="4" fill="#1a1a1a"/>
+  <circle cx="38.5" cy="6" r="4" fill="#1a1a1a"/>
+  <circle cx="24.5" cy="5" r="2" fill="#fff"/>
+  <circle cx="37.5" cy="5" r="2" fill="#fff"/>
+
+  <!-- Antennae -->
+  <line x1="28" y1="12" x2="22" y2="2" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="36" y1="12" x2="42" y2="2" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Mouth (happy) -->
+  <path d="M 28 22 Q 32 26 36 22" stroke="#6B1010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

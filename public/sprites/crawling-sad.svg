@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Shadow -->
+  <ellipse cx="32" cy="58" rx="16" ry="4" fill="#000" opacity="0.3"/>
+
+  <!-- Tail segments (droopy) -->
+  <ellipse cx="32" cy="54" rx="8" ry="5" fill="#8B1E1E"/>
+  <ellipse cx="32" cy="50" rx="9" ry="5" fill="#A52A2A"/>
+
+  <!-- Body (main shell - slightly compressed/sad) -->
+  <ellipse cx="32" cy="38" rx="14" ry="16" fill="#CD4444"/>
+  <ellipse cx="32" cy="34" rx="11" ry="12" fill="#D45555" opacity="0.7"/>
+  <ellipse cx="32" cy="30" rx="8" ry="9" fill="#E06666" opacity="0.5"/>
+
+  <!-- Left arm (drooping) -->
+  <ellipse cx="14" cy="42" rx="6" ry="4" fill="#A52A2A" transform="rotate(15 14 42)"/>
+  <ellipse cx="6" cy="44" rx="7" ry="5" fill="#CD4444"/>
+
+  <!-- Right arm (drooping) -->
+  <ellipse cx="50" cy="42" rx="6" ry="4" fill="#A52A2A" transform="rotate(-15 50 42)"/>
+  <ellipse cx="58" cy="44" rx="7" ry="5" fill="#CD4444"/>
+
+  <!-- Legs -->
+  <ellipse cx="20" cy="48" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-30 20 48)"/>
+  <ellipse cx="18" cy="52" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-20 18 52)"/>
+  <ellipse cx="44" cy="48" rx="5" ry="2" fill="#8B1E1E" transform="rotate(30 44 48)"/>
+  <ellipse cx="46" cy="52" rx="5" ry="2" fill="#8B1E1E" transform="rotate(20 46 52)"/>
+
+  <!-- Head (tilted down slightly) -->
+  <ellipse cx="32" cy="20" rx="10" ry="8" fill="#CD4444"/>
+  <ellipse cx="32" cy="18" rx="7" ry="5" fill="#E06666" opacity="0.5"/>
+
+  <!-- Eye stalks (droopy) -->
+  <rect x="24" y="10" width="3" height="8" rx="1.5" fill="#A52A2A" transform="rotate(-5 25.5 14)"/>
+  <rect x="37" y="10" width="3" height="8" rx="1.5" fill="#A52A2A" transform="rotate(5 38.5 14)"/>
+
+  <!-- Sad eyes -->
+  <circle cx="25.5" cy="8" r="4" fill="#1a1a1a"/>
+  <circle cx="38.5" cy="8" r="4" fill="#1a1a1a"/>
+  <circle cx="24.5" cy="7" r="2" fill="#fff"/>
+  <circle cx="37.5" cy="7" r="2" fill="#fff"/>
+
+  <!-- Sad eyebrows -->
+  <line x1="22" y1="4" x2="29" y2="6" stroke="#6B1010" stroke-width="2" stroke-linecap="round"/>
+  <line x1="42" y1="4" x2="35" y2="6" stroke="#6B1010" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Sad mouth (frown) -->
+  <path d="M 27 25 Q 32 21 37 25" stroke="#6B1010" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Tear drop -->
+  <ellipse cx="42" cy="14" rx="2" ry="3" fill="#87CEEB"/>
+
+  <!-- Antennae (droopy) -->
+  <path d="M 28 14 Q 24 8 26 2" stroke="#8B1E1E" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 36 14 Q 40 8 38 2" stroke="#8B1E1E" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

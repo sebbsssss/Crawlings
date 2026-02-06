@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Shadow (smaller, cowering) -->
+  <ellipse cx="32" cy="58" rx="14" ry="3" fill="#000" opacity="0.3"/>
+
+  <!-- Tail segments (tucked) -->
+  <ellipse cx="32" cy="54" rx="7" ry="4" fill="#8B1E1E"/>
+  <ellipse cx="32" cy="50" rx="8" ry="4" fill="#A52A2A"/>
+
+  <!-- Body (hunched/scared) -->
+  <ellipse cx="32" cy="40" rx="13" ry="14" fill="#CD4444"/>
+  <ellipse cx="32" cy="36" rx="10" ry="11" fill="#D45555" opacity="0.7"/>
+  <ellipse cx="32" cy="33" rx="7" ry="8" fill="#E06666" opacity="0.5"/>
+
+  <!-- Left arm (tucked in, defensive) -->
+  <ellipse cx="18" cy="38" rx="5" ry="4" fill="#A52A2A"/>
+  <ellipse cx="14" cy="36" rx="6" ry="4" fill="#CD4444"/>
+
+  <!-- Right arm (tucked in, defensive) -->
+  <ellipse cx="46" cy="38" rx="5" ry="4" fill="#A52A2A"/>
+  <ellipse cx="50" cy="36" rx="6" ry="4" fill="#CD4444"/>
+
+  <!-- Legs (tucked) -->
+  <ellipse cx="22" cy="48" rx="4" ry="2" fill="#8B1E1E" transform="rotate(-20 22 48)"/>
+  <ellipse cx="20" cy="52" rx="4" ry="2" fill="#8B1E1E" transform="rotate(-10 20 52)"/>
+  <ellipse cx="42" cy="48" rx="4" ry="2" fill="#8B1E1E" transform="rotate(20 42 48)"/>
+  <ellipse cx="44" cy="52" rx="4" ry="2" fill="#8B1E1E" transform="rotate(10 44 52)"/>
+
+  <!-- Head (pulled back) -->
+  <ellipse cx="32" cy="22" rx="11" ry="9" fill="#CD4444"/>
+  <ellipse cx="32" cy="20" rx="8" ry="6" fill="#E06666" opacity="0.5"/>
+
+  <!-- Eye stalks (alert, standing up) -->
+  <rect x="23" y="6" width="3" height="10" rx="1.5" fill="#A52A2A"/>
+  <rect x="38" y="6" width="3" height="10" rx="1.5" fill="#A52A2A"/>
+
+  <!-- Scared eyes (wide, small pupils) -->
+  <circle cx="24.5" cy="4" r="5" fill="#fff"/>
+  <circle cx="39.5" cy="4" r="5" fill="#fff"/>
+  <circle cx="24.5" cy="4" r="2" fill="#1a1a1a"/>
+  <circle cx="39.5" cy="4" r="2" fill="#1a1a1a"/>
+
+  <!-- Worried eyebrows -->
+  <line x1="20" y1="0" x2="28" y2="2" stroke="#6B1010" stroke-width="2" stroke-linecap="round"/>
+  <line x1="44" y1="0" x2="36" y2="2" stroke="#6B1010" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Scared mouth (wobbly O) -->
+  <ellipse cx="32" cy="26" rx="4" ry="5" fill="#6B1010"/>
+  <ellipse cx="32" cy="25" rx="2" ry="3" fill="#4a0a0a"/>
+
+  <!-- Sweat drops -->
+  <ellipse cx="16" cy="18" rx="2" ry="3" fill="#87CEEB"/>
+  <ellipse cx="48" cy="20" rx="1.5" ry="2.5" fill="#87CEEB"/>
+
+  <!-- Antennae (alert/trembling) -->
+  <line x1="27" y1="10" x2="18" y2="-2" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="37" y1="10" x2="46" y2="-2" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Trembling lines -->
+  <line x1="8" y1="30" x2="4" y2="30" stroke="#A52A2A" stroke-width="1" opacity="0.6"/>
+  <line x1="8" y1="34" x2="2" y2="34" stroke="#A52A2A" stroke-width="1" opacity="0.6"/>
+  <line x1="56" y1="32" x2="60" y2="32" stroke="#A52A2A" stroke-width="1" opacity="0.6"/>
+  <line x1="56" y1="36" x2="62" y2="36" stroke="#A52A2A" stroke-width="1" opacity="0.6"/>
+</svg>

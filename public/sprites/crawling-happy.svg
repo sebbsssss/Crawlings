@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Shadow -->
+  <ellipse cx="32" cy="58" rx="16" ry="4" fill="#000" opacity="0.3"/>
+
+  <!-- Tail segments -->
+  <ellipse cx="32" cy="52" rx="8" ry="5" fill="#8B1E1E"/>
+  <ellipse cx="32" cy="48" rx="9" ry="5" fill="#A52A2A"/>
+
+  <!-- Body (main shell) -->
+  <ellipse cx="32" cy="36" rx="14" ry="18" fill="#CD4444"/>
+  <ellipse cx="32" cy="32" rx="11" ry="14" fill="#D45555" opacity="0.7"/>
+  <ellipse cx="32" cy="28" rx="8" ry="10" fill="#E06666" opacity="0.5"/>
+
+  <!-- Left arm (raised happy) -->
+  <ellipse cx="12" cy="34" rx="6" ry="4" fill="#A52A2A" transform="rotate(-35 12 34)"/>
+  <ellipse cx="5" cy="30" rx="7" ry="5" fill="#CD4444"/>
+
+  <!-- Right arm (raised happy) -->
+  <ellipse cx="52" cy="34" rx="6" ry="4" fill="#A52A2A" transform="rotate(35 52 34)"/>
+  <ellipse cx="59" cy="30" rx="7" ry="5" fill="#CD4444"/>
+
+  <!-- Legs -->
+  <ellipse cx="20" cy="46" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-30 20 46)"/>
+  <ellipse cx="18" cy="50" rx="5" ry="2" fill="#8B1E1E" transform="rotate(-20 18 50)"/>
+  <ellipse cx="44" cy="46" rx="5" ry="2" fill="#8B1E1E" transform="rotate(30 44 46)"/>
+  <ellipse cx="46" cy="50" rx="5" ry="2" fill="#8B1E1E" transform="rotate(20 46 50)"/>
+
+  <!-- Head -->
+  <ellipse cx="32" cy="18" rx="10" ry="8" fill="#CD4444"/>
+  <ellipse cx="32" cy="16" rx="7" ry="5" fill="#E06666" opacity="0.5"/>
+
+  <!-- Eye stalks -->
+  <rect x="24" y="8" width="3" height="8" rx="1.5" fill="#A52A2A"/>
+  <rect x="37" y="8" width="3" height="8" rx="1.5" fill="#A52A2A"/>
+
+  <!-- Happy eyes (^ ^) -->
+  <path d="M 22 6 Q 25.5 3 29 6" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M 35 6 Q 38.5 3 42 6" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Blush -->
+  <ellipse cx="22" cy="20" rx="4" ry="2" fill="#FF6B6B" opacity="0.5"/>
+  <ellipse cx="42" cy="20" rx="4" ry="2" fill="#FF6B6B" opacity="0.5"/>
+
+  <!-- Big smile -->
+  <path d="M 26 22 Q 32 28 38 22" stroke="#6B1010" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Antennae (perky) -->
+  <line x1="28" y1="12" x2="20" y2="0" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="36" y1="12" x2="44" y2="0" stroke="#8B1E1E" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Sparkles -->
+  <circle cx="10" cy="10" r="2" fill="#FFD700"/>
+  <circle cx="54" cy="12" r="1.5" fill="#FFD700"/>
+</svg>

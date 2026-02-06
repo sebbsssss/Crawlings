@@ -6,118 +6,120 @@ import type { ToolType } from '@/types';
 
 interface ToolButton {
   id: ToolType;
-  icon: string;
   label: string;
-  group: 'basic' | 'build' | 'torture';
-  color?: string;
+  icon: string;
 }
 
-const tools: ToolButton[] = [
-  { id: 'select', icon: '👆', label: 'Select', group: 'basic' },
-  { id: 'spawn', icon: '🦞', label: 'Spawn', group: 'basic' },
-  { id: 'apple_tree', icon: '🍎', label: 'Tree', group: 'build' },
-  { id: 'bathtub', icon: '🛁', label: 'Bath', group: 'build' },
-  { id: 'carousel', icon: '🎠', label: 'Fun', group: 'build' },
-  { id: 'poke', icon: '👉', label: 'Poke', group: 'torture', color: '#FF6B6B' },
-  { id: 'rock', icon: '🪨', label: 'Crush', group: 'torture', color: '#666666' },
-  { id: 'zap', icon: '⚡', label: 'Zap', group: 'torture', color: '#FFE66D' },
-  { id: 'fire', icon: '🔥', label: 'Burn', group: 'torture', color: '#FF4500' },
-  { id: 'ice', icon: '🧊', label: 'Freeze', group: 'torture', color: '#87CEEB' },
+const toolGroups = [
+  {
+    name: 'Tools',
+    color: 'amber' as const,
+    tools: [
+      { id: 'select' as ToolType, label: 'Select', icon: '👆' },
+      { id: 'spawn' as ToolType, label: 'Spawn', icon: '🥚' },
+    ],
+  },
+  {
+    name: 'Care',
+    color: 'purple' as const,
+    tools: [
+      { id: 'pet' as ToolType, label: 'Pet', icon: '🤚' },
+      { id: 'feed' as ToolType, label: 'Feed', icon: '🍎' },
+    ],
+  },
+  {
+    name: 'Build',
+    color: 'green' as const,
+    tools: [
+      { id: 'apple_tree' as ToolType, label: 'Tree', icon: '🌳' },
+      { id: 'bathtub' as ToolType, label: 'Pond', icon: '💧' },
+      { id: 'carousel' as ToolType, label: 'Toys', icon: '🎠' },
+    ],
+  },
+  {
+    name: 'Torture',
+    color: 'coral' as const,
+    tools: [
+      { id: 'poke' as ToolType, label: 'Poke', icon: '👉' },
+      { id: 'rock' as ToolType, label: 'Crush', icon: '🪨' },
+      { id: 'zap' as ToolType, label: 'Zap', icon: '⚡' },
+      { id: 'fire' as ToolType, label: 'Burn', icon: '🔥' },
+      { id: 'ice' as ToolType, label: 'Freeze', icon: '❄️' },
+    ],
+  },
 ];
 
-export function Toolbar() {
-  const { currentTool, setTool, isPaused, togglePause, reset } = useGameStore();
+const labelColors = {
+  amber: 'text-[#b8860b]',
+  green: 'text-[#4a7c59]',
+  coral: 'text-[#c94c4c]',
+  purple: 'text-[#8b5a9b]',
+};
 
-  const basicTools = tools.filter(t => t.group === 'basic');
-  const buildTools = tools.filter(t => t.group === 'build');
-  const tortureTools = tools.filter(t => t.group === 'torture');
+export function Toolbar() {
+  const { currentTool, setTool, isPaused, togglePause, reset, musicEnabled, toggleMusic } = useGameStore();
 
   return (
-    <div className="flex gap-2 mb-3 p-3 bg-white/5 rounded-lg border border-white/10 flex-wrap items-center">
-      {/* Basic tools */}
-      <div className="flex gap-1.5 pr-3 border-r border-white/20">
-        {basicTools.map(tool => (
-          <ToolButton
-            key={tool.id}
-            tool={tool}
-            isActive={currentTool === tool.id}
-            onClick={() => setTool(tool.id)}
-          />
-        ))}
-      </div>
+    <div className="wood-panel p-4 mb-4">
+      <div className="wood-panel-inner p-3">
+        <div className="flex items-center justify-between">
+          {/* Tool groups */}
+          <div className="flex items-center gap-2">
+            {toolGroups.map((group, groupIndex) => (
+              <div key={group.name} className="flex items-center">
+                {/* Divider between groups */}
+                {groupIndex > 0 && (
+                  <div className="w-px h-8 bg-[#8b5a2b] opacity-30 mx-2" />
+                )}
 
-      {/* Build tools */}
-      <div className="flex gap-1.5 pr-3 border-r border-white/20">
-        {buildTools.map(tool => (
-          <ToolButton
-            key={tool.id}
-            tool={tool}
-            isActive={currentTool === tool.id}
-            onClick={() => setTool(tool.id)}
-            activeColor="#228B22"
-            activeBorder="#4ADE80"
-          />
-        ))}
-      </div>
+                {/* Group */}
+                <div className="flex flex-col gap-1">
+                  <span className={`text-[10px] font-bold tracking-wider uppercase ${labelColors[group.color]}`}>
+                    {group.name}
+                  </span>
+                  <div className="flex gap-1">
+                    {group.tools.map(tool => (
+                      <button
+                        key={tool.id}
+                        onClick={() => setTool(tool.id)}
+                        className={`tool-btn ${currentTool === tool.id ? 'active' : ''}`}
+                        title={tool.label}
+                      >
+                        <span className="text-base">{tool.icon}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      {/* Torture tools */}
-      <div className="flex gap-1.5 pr-3 border-r border-white/20">
-        {tortureTools.map(tool => (
-          <ToolButton
-            key={tool.id}
-            tool={tool}
-            isActive={currentTool === tool.id}
-            onClick={() => setTool(tool.id)}
-            activeColor={tool.color}
-            activeBorder={tool.color}
-          />
-        ))}
-      </div>
-
-      {/* Control buttons */}
-      <div className="flex gap-1.5 ml-auto">
-        <button
-          onClick={togglePause}
-          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-            isPaused
-              ? 'bg-green-600 text-white'
-              : 'bg-yellow-600 text-white'
-          }`}
-        >
-          {isPaused ? '▶️ Play' : '⏸️ Pause'}
-        </button>
-        <button
-          onClick={reset}
-          className="px-3 py-1.5 rounded-md text-sm font-medium bg-red-900/50 text-red-300 hover:bg-red-900 transition-all"
-        >
-          🔄 Reset
-        </button>
+          {/* Control buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleMusic}
+              className={`tool-btn control ${musicEnabled ? 'active' : ''}`}
+              title={musicEnabled ? 'Mute music' : 'Play music'}
+            >
+              <span>{musicEnabled ? '🎵' : '🔇'}</span>
+            </button>
+            <button
+              onClick={togglePause}
+              className={`tool-btn control ${isPaused ? 'paused' : ''}`}
+              title={isPaused ? 'Resume' : 'Pause'}
+            >
+              <span>{isPaused ? '▶️' : '⏸️'}</span>
+            </button>
+            <button
+              onClick={reset}
+              className="tool-btn control danger"
+              title="Reset game"
+            >
+              <span>🔄</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  );
-}
-
-interface ToolButtonProps {
-  tool: ToolButton;
-  isActive: boolean;
-  onClick: () => void;
-  activeColor?: string;
-  activeBorder?: string;
-}
-
-function ToolButton({ tool, isActive, onClick, activeColor = '#7209B7', activeBorder = '#F72585' }: ToolButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      className="px-3 py-1.5 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all"
-      style={{
-        background: isActive ? activeColor : 'rgba(255,255,255,0.1)',
-        border: `2px solid ${isActive ? activeBorder : 'transparent'}`,
-        color: isActive && tool.group === 'torture' ? '#000' : '#F8F9FA',
-      }}
-    >
-      <span>{tool.icon}</span>
-      <span>{tool.label}</span>
-    </button>
   );
 }

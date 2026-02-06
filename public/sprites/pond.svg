@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 64" width="96" height="64">
+  <!-- Pond shadow -->
+  <ellipse cx="48" cy="58" rx="42" ry="10" fill="#1a3a1a" opacity="0.4"/>
+
+  <!-- Pond base (dark water) -->
+  <ellipse cx="48" cy="44" rx="40" ry="20" fill="#1a4a5a"/>
+
+  <!-- Pond water surface -->
+  <ellipse cx="48" cy="42" rx="38" ry="18" fill="#2a6a7a"/>
+
+  <!-- Water highlight -->
+  <ellipse cx="42" cy="38" rx="26" ry="12" fill="#3a8a9a" opacity="0.6"/>
+  <ellipse cx="36" cy="34" rx="14" ry="7" fill="#4a9aaa" opacity="0.4"/>
+
+  <!-- Ripples -->
+  <ellipse cx="48" cy="42" rx="30" ry="14" fill="none" stroke="#5acaea" stroke-width="0.8" opacity="0.5"/>
+  <ellipse cx="48" cy="42" rx="20" ry="10" fill="none" stroke="#5acaea" stroke-width="0.6" opacity="0.4"/>
+  <ellipse cx="48" cy="42" rx="10" ry="5" fill="none" stroke="#6adafa" stroke-width="0.4" opacity="0.3"/>
+
+  <!-- Rocks around edge -->
+  <ellipse cx="10" cy="48" rx="5" ry="4" fill="#6a6a5a"/>
+  <ellipse cx="14" cy="52" rx="4" ry="3" fill="#7a7a6a"/>
+  <ellipse cx="6" cy="44" rx="3" ry="2" fill="#5a5a4a"/>
+  <ellipse cx="86" cy="46" rx="4" ry="3" fill="#6a6a5a"/>
+  <ellipse cx="88" cy="50" rx="5" ry="3" fill="#5a5a4a"/>
+  <ellipse cx="82" cy="52" rx="3" ry="2" fill="#7a7a6a"/>
+
+  <!-- Lily pads -->
+  <ellipse cx="62" cy="38" rx="7" ry="4" fill="#3a8a4a"/>
+  <path d="M 62 38 L 62 34" stroke="#2a6a3a" stroke-width="1.5"/>
+
+  <ellipse cx="30" cy="46" rx="5" ry="3" fill="#4a9a5a"/>
+  <path d="M 30 46 L 30 43" stroke="#3a8a4a" stroke-width="1"/>
+
+  <ellipse cx="70" cy="48" rx="4" ry="2.5" fill="#3a8a4a"/>
+
+  <!-- Small flower on lily pad -->
+  <circle cx="62" cy="34" r="2.5" fill="#ff9eb8"/>
+  <circle cx="62" cy="34" r="1" fill="#ffeb3b"/>
+
+  <!-- Water sparkles -->
+  <circle cx="44" cy="36" r="1.2" fill="#aaeeff" opacity="0.8"/>
+  <circle cx="56" cy="42" r="1" fill="#aaeeff" opacity="0.6"/>
+  <circle cx="38" cy="48" r="0.8" fill="#aaeeff" opacity="0.5"/>
+  <circle cx="66" cy="40" r="0.9" fill="#aaeeff" opacity="0.7"/>
+</svg>
