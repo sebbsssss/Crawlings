@@ -28,6 +28,9 @@ import {
   TOOL_EFFECTS,
   THOUGHTS,
   ACHIEVEMENTS_DEF,
+  VARIANT_IDS,
+  VARIANT_WEIGHTS,
+  type VariantId,
 } from '@/types';
 
 interface GameStore extends GameState {
@@ -58,9 +61,28 @@ const COLLISION = {
   bone: 10,
 };
 
-const createAgent = (x: number, y: number, parentId?: string): Agent => ({
+// Select a random variant using weighted probabilities
+const selectRandomVariant = (): VariantId => {
+  const random = Math.random();
+  let cumulative = 0;
+  for (const variantId of VARIANT_IDS) {
+    cumulative += VARIANT_WEIGHTS[variantId];
+    if (random < cumulative) {
+      return variantId;
+    }
+  }
+  return 'a'; // Fallback
+};
+
+// Select variant for child (70% inherit, 30% random)
+const selectChildVariant = (parentVariant: VariantId): VariantId => {
+  return Math.random() < 0.7 ? parentVariant : selectRandomVariant();
+};
+
+const createAgent = (x: number, y: number, parentId?: string, variantId?: VariantId): Agent => ({
   id: nanoid(),
   name: AGENT_NAMES[Math.floor(Math.random() * AGENT_NAMES.length)] + Math.floor(Math.random() * 100),
+  variantId: variantId ?? selectRandomVariant(),
   x,
   y,
   targetX: x,
@@ -744,7 +766,8 @@ export const useGameStore = create<GameStore>()(
             state.structures, state.agents, state.bones, updated.id
           );
 
-          const child = createAgent(childTarget.x, childTarget.y, updated.id);
+          const childVariant = selectChildVariant(updated.variantId);
+          const child = createAgent(childTarget.x, childTarget.y, updated.id, childVariant);
           // Child inherits some stats from parent
           child.hunger = Math.min(100, updated.hunger * 0.8);
           child.cleanliness = Math.min(100, updated.cleanliness * 0.8);

@@ -10,8 +10,8 @@ import { MoltbookFeed } from './MoltbookFeed';
 import { StatsBar } from './StatsBar';
 import { Minimap } from './Minimap';
 import { MusicPlayer } from './MusicPlayer';
-import type { Agent } from '@/types';
-import { WORLD_WIDTH, WORLD_HEIGHT, VIEWPORT_WIDTH, VIEWPORT_HEIGHT } from '@/types';
+import type { Agent, VariantId } from '@/types';
+import { WORLD_WIDTH, WORLD_HEIGHT, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, VARIANT_COLORS } from '@/types';
 
 // Sprite URLs
 const SPRITES = {
@@ -223,6 +223,112 @@ function drawSpeechBubble(g: PIXI.Graphics, need: NeedType, isUp: boolean, frame
     g.closePath();
   }
   g.endFill();
+}
+
+// Get base tint color for variant
+function getVariantTint(variantId: VariantId | undefined): number {
+  if (!variantId || !VARIANT_COLORS[variantId]) return 0xFFFFFF;
+  return VARIANT_COLORS[variantId].primary;
+}
+
+// Blend variant color with state color
+function blendColors(variantColor: number, stateColor: number, variantWeight: number = 0.4): number {
+  const vr = (variantColor >> 16) & 0xFF;
+  const vg = (variantColor >> 8) & 0xFF;
+  const vb = variantColor & 0xFF;
+
+  const sr = (stateColor >> 16) & 0xFF;
+  const sg = (stateColor >> 8) & 0xFF;
+  const sb = stateColor & 0xFF;
+
+  const r = Math.floor(vr * variantWeight + sr * (1 - variantWeight));
+  const g = Math.floor(vg * variantWeight + sg * (1 - variantWeight));
+  const b = Math.floor(vb * variantWeight + sb * (1 - variantWeight));
+
+  return (r << 16) | (g << 8) | b;
+}
+
+// Determine which relationship icons to show
+interface RelationshipIcons {
+  showHeart: boolean;
+  showAnger: boolean;
+  showFamily: boolean;
+}
+
+function getRelationshipIcons(agent: Agent, allAgents: Agent[]): RelationshipIcons {
+  const nearbyRadius = 60;
+  const nearbyAgents = allAgents.filter(other =>
+    other.id !== agent.id &&
+    other.isAlive &&
+    Math.hypot(other.x - agent.x, other.y - agent.y) < nearbyRadius
+  );
+
+  const nearFriend = nearbyAgents.some(a => agent.friendIds.includes(a.id));
+  const nearEnemy = nearbyAgents.some(a => agent.enemyIds.includes(a.id));
+  const nearFamily = nearbyAgents.some(a =>
+    a.id === agent.parentId || agent.childIds.includes(a.id)
+  );
+
+  return {
+    showHeart: nearFriend && !['aggressive', 'attacking', 'crazed'].includes(agent.state),
+    showAnger: nearEnemy || ['aggressive', 'attacking'].includes(agent.state),
+    showFamily: nearFamily && !nearEnemy && !nearFriend, // Only show if not already showing heart/anger
+  };
+}
+
+// Draw relationship icons above agent
+function drawRelationshipIcons(g: PIXI.Graphics, icons: RelationshipIcons, frame: number) {
+  g.clear();
+
+  const activeIcons: { type: string; color: number }[] = [];
+  if (icons.showHeart) activeIcons.push({ type: 'heart', color: 0xFF69B4 });
+  if (icons.showAnger) activeIcons.push({ type: 'anger', color: 0xFF4444 });
+  if (icons.showFamily) activeIcons.push({ type: 'family', color: 0xFFD700 });
+
+  if (activeIcons.length === 0) return;
+
+  const iconSpacing = 16;
+  const startX = -((activeIcons.length - 1) * iconSpacing) / 2;
+  const baseY = -55;
+
+  activeIcons.forEach((icon, index) => {
+    const x = startX + index * iconSpacing;
+    const y = baseY + Math.sin(frame * 0.1 + index) * 2; // Gentle bob
+    const scale = 0.8 + Math.sin(frame * 0.15 + index) * 0.1; // Pulse
+
+    g.beginFill(icon.color, 0.9);
+
+    if (icon.type === 'heart') {
+      // Draw heart
+      const size = 5 * scale;
+      g.moveTo(x, y + size * 0.5);
+      g.bezierCurveTo(x - size, y - size * 0.3, x - size * 0.5, y - size, x, y - size * 0.3);
+      g.bezierCurveTo(x + size * 0.5, y - size, x + size, y - size * 0.3, x, y + size * 0.5);
+    } else if (icon.type === 'anger') {
+      // Draw anger symbol (cross/X marks)
+      g.lineStyle(2, icon.color, 0.9);
+      g.moveTo(x - 4 * scale, y - 4 * scale);
+      g.lineTo(x + 4 * scale, y + 4 * scale);
+      g.moveTo(x + 4 * scale, y - 4 * scale);
+      g.lineTo(x - 4 * scale, y + 4 * scale);
+      g.lineStyle(0);
+    } else if (icon.type === 'family') {
+      // Draw family/star symbol
+      const starSize = 5 * scale;
+      const starPoints: number[] = [];
+      for (let i = 0; i < 5; i++) {
+        const outerAngle = (i * 72 - 90) * Math.PI / 180;
+        const innerAngle = ((i * 72) + 36 - 90) * Math.PI / 180;
+        starPoints.push(x + Math.cos(outerAngle) * starSize);
+        starPoints.push(y + Math.sin(outerAngle) * starSize);
+        starPoints.push(x + Math.cos(innerAngle) * starSize * 0.4);
+        starPoints.push(y + Math.sin(innerAngle) * starSize * 0.4);
+      }
+      g.drawPolygon(starPoints);
+    }
+
+    g.endFill();
+  });
 }
 
 // Determine expression based on agent state
@@ -458,8 +564,8 @@ export function Game() {
         if (!agent || !agent.isAlive) continue;
 
         // Idle bobbing animation
-        const bobSpeed = agent.state === 'excited' || agent.state === 'playing' ? 0.15 : 0.08;
-        const bobAmount = agent.state === 'excited' || agent.state === 'playing' ? 3 : 1.5;
+        const bobSpeed = agent.state === 'playing' || agent.state === 'loved' ? 0.15 : 0.08;
+        const bobAmount = agent.state === 'playing' || agent.state === 'loved' ? 3 : 1.5;
         const bob = Math.sin(frame * bobSpeed + container.x * 0.1) * bobAmount;
 
         // Apply bobbing to the sprite container's children
@@ -659,6 +765,20 @@ export function Game() {
       if (!container) {
         container = new PIXI.Container();
 
+        // Shadow (drawn first, at bottom)
+        const shadow = new PIXI.Graphics();
+        shadow.name = 'shadow';
+        shadow.beginFill(0x000000, 0.25);
+        shadow.drawEllipse(0, 12, 14, 5);
+        shadow.endFill();
+        container.addChild(shadow);
+
+        // Selection ring (behind sprite)
+        const selectionRing = new PIXI.Graphics();
+        selectionRing.name = 'selection';
+        selectionRing.visible = false;
+        container.addChild(selectionRing);
+
         // Create all expression sprites
         for (const [key, texture] of Object.entries(texturesRef.current)) {
           if (key.startsWith('crawling')) {
@@ -671,16 +791,15 @@ export function Game() {
           }
         }
 
-        // Selection ring
-        const selectionRing = new PIXI.Graphics();
-        selectionRing.name = 'selection';
-        selectionRing.visible = false;
-        container.addChildAt(selectionRing, 0);
-
         // Effect overlay
         const effectOverlay = new PIXI.Graphics();
         effectOverlay.name = 'effect';
         container.addChild(effectOverlay);
+
+        // Relationship icons (above everything)
+        const relationshipIcons = new PIXI.Graphics();
+        relationshipIcons.name = 'relationship-icons';
+        container.addChild(relationshipIcons);
 
         // Speech bubble for needs
         const speechBubble = new PIXI.Graphics();
@@ -720,6 +839,9 @@ export function Game() {
         container.rotation = 0;
       }
 
+      // Get variant base tint
+      const variantTint = getVariantTint(agent.variantId);
+
       // Show correct expression sprite
       for (const child of container.children) {
         if (child.name?.startsWith('sprite-')) {
@@ -730,39 +852,49 @@ export function Game() {
             // Apply direction
             child.scale.x = 0.5 * agent.direction;
 
-            // Apply tint for special states
+            // Apply tint: blend variant color with state color
             if (agent.state === 'frozen') {
-              child.tint = 0xADD8E6;
+              child.tint = blendColors(variantTint, 0xADD8E6, 0.3);
             } else if (agent.state === 'burning') {
-              child.tint = 0xFFAA66;
+              child.tint = blendColors(variantTint, 0xFFAA66, 0.3);
             } else if (agent.state === 'zapped') {
-              child.tint = 0xFFFFAA;
+              child.tint = blendColors(variantTint, 0xFFFFAA, 0.3);
             } else if (agent.state === 'crazed') {
               // Pulsing purple/magenta tint for crazed
               const pulse = Math.sin(animationFrameRef.current * 0.1) * 0.3 + 0.7;
               const r = Math.floor(255 * pulse);
               const g = Math.floor(100 * (1 - pulse * 0.5));
               const b = Math.floor(200 + 55 * pulse);
-              child.tint = (r << 16) | (g << 8) | b;
+              const crazedColor = (r << 16) | (g << 8) | b;
+              child.tint = blendColors(variantTint, crazedColor, 0.25);
             } else if (agent.state === 'loved') {
               // Pink tint when being petted
-              child.tint = 0xFFB6C1;
+              child.tint = blendColors(variantTint, 0xFFB6C1, 0.4);
             } else if (agent.state === 'aggressive' || agent.state === 'attacking') {
               // Red tint when aggressive
               const pulse = Math.sin(animationFrameRef.current * 0.15) * 0.2 + 0.8;
-              child.tint = (Math.floor(255 * pulse) << 16) | (Math.floor(100 * (1 - pulse * 0.3)) << 8) | Math.floor(100 * (1 - pulse * 0.3));
+              const aggressiveColor = (Math.floor(255 * pulse) << 16) | (Math.floor(100 * (1 - pulse * 0.3)) << 8) | Math.floor(100 * (1 - pulse * 0.3));
+              child.tint = blendColors(variantTint, aggressiveColor, 0.3);
             } else if (agent.state === 'hurt') {
               // Flash white/red when hurt
               const flash = Math.sin(animationFrameRef.current * 0.3) > 0;
-              child.tint = flash ? 0xFF6666 : 0xFFFFFF;
+              child.tint = flash ? blendColors(variantTint, 0xFF6666, 0.4) : variantTint;
             } else if (agent.state === 'bonding') {
               // Warm yellow tint when bonding
-              child.tint = 0xFFE4B5;
+              child.tint = blendColors(variantTint, 0xFFE4B5, 0.4);
             } else {
-              child.tint = 0xFFFFFF;
+              // Normal state: use variant tint
+              child.tint = variantTint;
             }
           }
         }
+      }
+
+      // Update relationship icons
+      const relationshipIcons = container.getChildByName('relationship-icons') as PIXI.Graphics;
+      if (relationshipIcons && agent.isAlive) {
+        const icons = getRelationshipIcons(agent, agents);
+        drawRelationshipIcons(relationshipIcons, icons, animationFrameRef.current);
       }
 
       // Update selection ring
@@ -1001,6 +1133,15 @@ export function Game() {
       }
     }
 
+    // Depth sorting - sort all children by Y position
+    // Objects with lower Y appear behind, higher Y appears in front
+    worldContainer.children.sort((a, b) => {
+      // Keep grass background always at back
+      if (a.name === 'grass' || !a.y) return -1;
+      if (b.name === 'grass' || !b.y) return 1;
+      return a.y - b.y;
+    });
+
   }, [agents, structures, bones, foods, selectedAgentId, isReady]);
 
   // Update background based on mood
@@ -1017,10 +1158,11 @@ export function Game() {
     app.renderer.background.color = colors[mood] || colors.neutral;
   }, [mood]);
 
-  const moodConfig = {
+  const moodConfig: Record<string, { text: string; color: string; bgAccent: string }> = {
     neutral: { text: 'A peaceful day in the colony', color: '#00f0ff', bgAccent: 'rgba(0, 240, 255, 0.03)' },
     anxious: { text: 'The colony is getting anxious...', color: '#ffaa00', bgAccent: 'rgba(255, 170, 0, 0.03)' },
     fearful: { text: 'The colony is terrified!', color: '#ff00aa', bgAccent: 'rgba(255, 0, 170, 0.05)' },
+    chaotic: { text: 'Chaos reigns!', color: '#ff00ff', bgAccent: 'rgba(255, 0, 255, 0.05)' },
   };
 
   const currentMood = moodConfig[mood] || moodConfig.neutral;

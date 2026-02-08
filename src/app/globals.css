@@ -656,3 +656,140 @@ body {
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 90, 43, 0.6);
 }
+
+/* Pixel art styling */
+.pixel-border {
+  border: 3px solid var(--wood-dark);
+  box-shadow:
+    3px 0 0 var(--wood-darker),
+    0 3px 0 var(--wood-darker),
+    3px 3px 0 var(--wood-shadow);
+  image-rendering: pixelated;
+}
+
+/* Sims-style need diamond */
+.need-diamond {
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  border: 2px solid currentColor;
+  position: relative;
+  overflow: hidden;
+}
+
+.need-diamond-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: currentColor;
+  transition: height 0.3s ease;
+}
+
+/* Moodlet container */
+.moodlet-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  background: var(--cream-medium);
+  border-radius: 6px;
+}
+
+.moodlet {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--wood-dark);
+  font-size: 18px;
+  background: var(--cream-light);
+}
+
+.moodlet-positive {
+  background: linear-gradient(180deg, #a5d6a7 0%, #4CAF50 100%);
+  border-color: #2E7D32;
+}
+
+.moodlet-negative {
+  background: linear-gradient(180deg, #ef9a9a 0%, #F44336 100%);
+  border-color: #D32F2F;
+}
+
+.moodlet-neutral {
+  background: linear-gradient(180deg, #fff59d 0%, #FFC107 100%);
+  border-color: #FFA000;
+}
+
+/* Isometric grid hint */
+.isometric-hint {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Variant color indicators */
+.variant-classic { --variant-color: #E85D04; }
+.variant-coral { --variant-color: #E07899; }
+.variant-deepsea { --variant-color: #6A5ACD; }
+.variant-golden { --variant-color: #DAA520; }
+.variant-moss { --variant-color: #4A7C59; }
+
+.variant-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--variant-color);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Relationship icons animation */
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.05); }
+}
+
+.relationship-icon {
+  animation: icon-float 1.5s ease-in-out infinite;
+}
+
+/* Portrait frame */
+.portrait-frame {
+  position: relative;
+  background: linear-gradient(135deg, var(--cream-light) 0%, var(--cream-dark) 100%);
+  border: 3px solid var(--wood-dark);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Status glow effects */
+.status-glow-happy {
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.status-glow-warning {
+  box-shadow: 0 0 12px rgba(255, 152, 0, 0.5);
+}
+
+.status-glow-danger {
+  box-shadow: 0 0 12px rgba(244, 67, 54, 0.5);
+}
+
+.status-glow-special {
+  box-shadow: 0 0 12px rgba(156, 39, 176, 0.5);
+}

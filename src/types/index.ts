@@ -44,9 +44,33 @@ export type ToolType =
 
 export type StructureType = 'apple_tree' | 'bathtub' | 'carousel';
 
+// Visual variants for different lobster appearances
+export type VariantId = 'a' | 'b' | 'c' | 'd' | 'e';
+
+export const VARIANT_IDS: VariantId[] = ['a', 'b', 'c', 'd', 'e'];
+
+// Weighted probabilities for variant assignment
+export const VARIANT_WEIGHTS: Record<VariantId, number> = {
+  a: 0.30,  // Classic red/orange - 30%
+  b: 0.25,  // Coral pink - 25%
+  c: 0.25,  // Deep sea blue/purple - 25%
+  d: 0.15,  // Golden amber - 15%
+  e: 0.05,  // Moss green (rare) - 5%
+};
+
+// Colors for each variant (base tint colors)
+export const VARIANT_COLORS: Record<VariantId, { primary: number; secondary: number; name: string }> = {
+  a: { primary: 0xE85D04, secondary: 0xF48C06, name: 'Classic' },     // Orange/red
+  b: { primary: 0xE07899, secondary: 0xF0A0B8, name: 'Coral' },       // Pink
+  c: { primary: 0x6A5ACD, secondary: 0x9370DB, name: 'Deep Sea' },    // Purple/blue
+  d: { primary: 0xDAA520, secondary: 0xFFD700, name: 'Golden' },      // Gold
+  e: { primary: 0x4A7C59, secondary: 0x6B9B6B, name: 'Moss' },        // Green (rare)
+};
+
 export interface Agent {
   id: string;
   name: string;
+  variantId: VariantId;  // Visual variant for appearance
   x: number;
   y: number;
   targetX: number;
